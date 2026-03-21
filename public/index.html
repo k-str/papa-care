@@ -3,82 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>パパケア 🍀 - 新米パパの育児情報メルマガ</title>
+  <title>パパケア 🍀 - 新米パパの育児メルマガ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
 
-    <!-- ヘッダー -->
-    <header class="hero">
-      <div class="hero-icon">🍀</div>
-      <h1>パパケア</h1>
-      <p class="tagline">新米パパのための育児情報を<br>毎日12時にお届け</p>
-    </header>
+  <!-- ナビ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <span class="nav-logo">🍀 パパケア</span>
+      <a href="#register" class="nav-cta">無料登録</a>
+    </div>
+  </nav>
 
-    <!-- 特徴 -->
-    <section class="features">
-      <div class="feature-card">
-        <span class="feature-icon">🤖</span>
-        <h3>AIが毎回生成</h3>
-        <p>Claude AIが新米パパに役立つ育児情報を毎日新鮮に生成します</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">📧</span>
-        <h3>毎日12時配信</h3>
-        <p>お昼休みに届く育児のヒント。子育てに自信がもてます</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">👨‍👧</span>
-        <h3>パパ目線の内容</h3>
-        <p>関わり方・沐浴・夜泣き対処など、パパがすぐ実践できる情報</p>
-      </div>
-    </section>
-
-    <!-- 登録フォーム -->
-    <section class="register-section">
-      <h2>メールアドレスを登録する</h2>
-      <p class="register-desc">無料・いつでも配信停止できます</p>
-
-      <form id="subscribe-form" class="form">
-        <div class="input-group">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="example@gmail.com"
-            required
-            autocomplete="email"
-          >
-          <button type="submit" id="submit-btn">登録する</button>
+  <!-- ヒーロー -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✨ AI生成・毎日無料配信</div>
+      <h1 class="hero-title">
+        パパになったあなたへ、<br>
+        <span class="accent">毎日ひとつ</span>の育児ヒント
+      </h1>
+      <p class="hero-sub">
+        Claude AIが新米パパ目線で生成した育児情報を<br>
+        毎日お昼12時にメールでお届けします
+      </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">12</span>
+          <span class="stat-label">テーマを毎日ローテーション</span>
         </div>
-        <div id="message" class="message hidden"></div>
-      </form>
-    </section>
-
-    <!-- サンプル -->
-    <section class="sample-section">
-      <h2>配信サンプル</h2>
-      <div class="sample-mail">
-        <div class="sample-header">
-          <span class="sample-badge">配信例</span>
-          <strong>本日のテーマ：赤ちゃんの抱き方・あやし方</strong>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">0円</span>
+          <span class="stat-label">完全無料</span>
         </div>
-        <div class="sample-body">
-          <p class="sample-heading">【基本の抱き方をマスターしよう】</p>
-          <p>赤ちゃんの首はまだ不安定です。必ず頭と首を手のひらでしっかり支えましょう。縦抱きは生後1ヶ月頃から少しずつ練習してみてください。</p>
-          <p class="sample-heading">【あやしのコツ3選】</p>
-          <p>① ゆっくり上下に揺らす（縦ゆれ）<br>② 「しーしー」と耳元でささやく<br>③ 心臓の音を聞かせるよう胸に密着して抱く</p>
-          <p>パパの大きな手は赤ちゃんに安心感を与えます。ぜひ積極的に抱っこしてあげてください！</p>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">1分</span>
+          <span class="stat-label">で登録完了</span>
         </div>
       </div>
-    </section>
+      <a href="#register" class="hero-btn">メールアドレスで無料登録 →</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hcard-top">
+          <span class="hcard-icon">🍀</span>
+          <div>
+            <div class="hcard-title">今日のパパケア</div>
+            <div class="hcard-date">毎日 12:00 配信</div>
+          </div>
+        </div>
+        <div class="hcard-theme">テーマ：赤ちゃんの抱き方</div>
+        <div class="hcard-lines">
+          <div class="hcard-line w80"></div>
+          <div class="hcard-line w60"></div>
+          <div class="hcard-line w90"></div>
+          <div class="hcard-line w50"></div>
+        </div>
+        <div class="hcard-footer">Claude AI が生成</div>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      <p>© 2025 パパケア | <a href="/unsubscribe">配信停止</a></p>
-    </footer>
+  <!-- 特徴 -->
+  <section class="features">
+    <div class="inner">
+      <h2 class="section-title">パパケアが選ばれる理由</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="fc-icon">🤖</div>
+          <h3>毎回AIが生成</h3>
+          <p>世界最高峰のAI「Claude」が毎日新鮮な育児情報を作成。同じ内容が繰り返されません。</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">👨‍👧</div>
+          <h3>パパ専用の目線</h3>
+          <p>抱っこの仕方・沐浴・夜泣き対処…ママ向けではなく、パパが今すぐ実践できる内容だけ。</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">⏰</div>
+          <h3>毎日12時に届く</h3>
+          <p>昼休みにサッと読める長さで配信。忙しいパパでも無理なく育児知識が身につきます。</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon">🔓</div>
+          <h3>完全無料・即解除</h3>
+          <p>クレジットカード不要。配信停止はメール内のリンクをクリックするだけ。</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  </div>
+  <!-- 配信例 -->
+  <section class="sample-section">
+    <div class="inner">
+      <h2 class="section-title">こんなメールが届きます</h2>
+      <div class="sample-wrapper">
+        <div class="sample-mail">
+          <div class="sm-header">
+            <div class="sm-from">
+              <span class="sm-avatar">🍀</span>
+              <div>
+                <div class="sm-name">パパケア</div>
+                <div class="sm-addr">papa-care@example.com</div>
+              </div>
+            </div>
+            <div class="sm-time">今日 12:00</div>
+          </div>
+          <div class="sm-subject">【パパケア】本日の育児情報：赤ちゃんの抱き方・あやし方</div>
+          <div class="sm-body">
+            <p class="sm-heading">【基本の抱き方をマスターしよう】</p>
+            <p>赤ちゃんの首はまだ不安定です。必ず頭と首を手のひらでしっかり支えましょう。縦抱きは生後1ヶ月頃から少しずつ練習してみてください。</p>
+            <p class="sm-heading">【あやしのコツ3選】</p>
+            <p>① ゆっくり上下に揺らす（縦ゆれ）<br>
+               ② 「しーしー」と耳元でささやく<br>
+               ③ 心臓の音を聞かせるよう胸に密着して抱く</p>
+            <p class="sm-closing">パパの大きな手は赤ちゃんに安心感を与えます。ぜひ積極的に抱っこしてあげてください！💪</p>
+          </div>
+        </div>
+        <ul class="sample-points">
+          <li>✅ 読むのに1〜2分の手頃な長さ</li>
+          <li>✅ 見出しで内容がひと目でわかる</li>
+          <li>✅ 具体的なアクションが必ず入る</li>
+          <li>✅ 励ましのメッセージで締めくくり</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 登録フォーム -->
+  <section class="register-section" id="register">
+    <div class="inner register-inner">
+      <div class="register-text">
+        <h2>今日から始める、<br>パパの育児</h2>
+        <p>メールアドレスを登録するだけ。<br>明日のお昼12時から配信スタートします。</p>
+      </div>
+      <div class="register-form-wrap">
+        <form id="subscribe-form">
+          <label class="form-label" for="email">メールアドレス</label>
+          <div class="form-row">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="example@gmail.com"
+              required
+              autocomplete="email"
+            >
+            <button type="submit" id="submit-btn">無料で登録する</button>
+          </div>
+          <p class="form-note">🔒 スパムは送りません。いつでも配信停止できます。</p>
+          <div id="message" class="msg hidden"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- テーマ一覧 -->
+  <section class="topics-section">
+    <div class="inner">
+      <h2 class="section-title">配信テーマ一覧</h2>
+      <div class="topics-grid">
+        <div class="topic-chip">🤱 生後0〜3ヶ月の関わり方</div>
+        <div class="topic-chip">🛁 沐浴・入浴のコツ</div>
+        <div class="topic-chip">🌙 夜泣き対処法</div>
+        <div class="topic-chip">🤗 抱き方・あやし方</div>
+        <div class="topic-chip">💬 夫婦のコミュニケーション</div>
+        <div class="topic-chip">🍼 授乳タイムへの参加</div>
+        <div class="topic-chip">❤️ 産後パートナーのサポート</div>
+        <div class="topic-chip">🫶 スキンシップ・絆</div>
+        <div class="topic-chip">🔄 おむつ替えのコツ</div>
+        <div class="topic-chip">📈 成長・発達の目安</div>
+        <div class="topic-chip">💆 育児疲れのリフレッシュ</div>
+        <div class="topic-chip">🎵 あやし歌・遊び</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="inner footer-inner">
+      <span class="footer-logo">🍀 パパケア</span>
+      <span class="footer-copy">© 2025 パパケア</span>
+      <a href="/unsubscribe" class="footer-link">配信停止</a>
+    </div>
+  </footer>
 
   <script>
     const form = document.getElementById('subscribe-form');
@@ -91,7 +205,7 @@
 
       btn.disabled = true;
       btn.textContent = '登録中...';
-      msgEl.className = 'message hidden';
+      msgEl.className = 'msg hidden';
 
       try {
         const res = await fetch('/subscribe', {
@@ -102,21 +216,29 @@
         const data = await res.json();
 
         msgEl.textContent = data.message;
-        msgEl.className = `message ${data.ok ? 'success' : 'error'}`;
+        msgEl.className = `msg ${data.ok ? 'success' : 'error'}`;
 
         if (data.ok) {
           form.reset();
-          btn.textContent = '✓ 登録完了';
+          btn.textContent = '✓ 登録完了！';
         } else {
           btn.disabled = false;
-          btn.textContent = '登録する';
+          btn.textContent = '無料で登録する';
         }
       } catch {
         msgEl.textContent = '通信エラーが発生しました。しばらく後に再試行してください。';
-        msgEl.className = 'message error';
+        msgEl.className = 'msg error';
         btn.disabled = false;
-        btn.textContent = '登録する';
+        btn.textContent = '無料で登録する';
       }
+    });
+
+    // スムーズスクロール
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
     });
   </script>
 </body>
