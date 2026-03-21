@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パパケア 🍀 - 新米パパの育児情報メルマガ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- ヘッダー -->
+    <header class="hero">
+      <div class="hero-icon">🍀</div>
+      <h1>パパケア</h1>
+      <p class="tagline">新米パパのための育児情報を<br>毎日12時にお届け</p>
+    </header>
+
+    <!-- 特徴 -->
+    <section class="features">
+      <div class="feature-card">
+        <span class="feature-icon">🤖</span>
+        <h3>AIが毎回生成</h3>
+        <p>Claude AIが新米パパに役立つ育児情報を毎日新鮮に生成します</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📧</span>
+        <h3>毎日12時配信</h3>
+        <p>お昼休みに届く育児のヒント。子育てに自信がもてます</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">👨‍👧</span>
+        <h3>パパ目線の内容</h3>
+        <p>関わり方・沐浴・夜泣き対処など、パパがすぐ実践できる情報</p>
+      </div>
+    </section>
+
+    <!-- 登録フォーム -->
+    <section class="register-section">
+      <h2>メールアドレスを登録する</h2>
+      <p class="register-desc">無料・いつでも配信停止できます</p>
+
+      <form id="subscribe-form" class="form">
+        <div class="input-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="example@gmail.com"
+            required
+            autocomplete="email"
+          >
+          <button type="submit" id="submit-btn">登録する</button>
+        </div>
+        <div id="message" class="message hidden"></div>
+      </form>
+    </section>
+
+    <!-- サンプル -->
+    <section class="sample-section">
+      <h2>配信サンプル</h2>
+      <div class="sample-mail">
+        <div class="sample-header">
+          <span class="sample-badge">配信例</span>
+          <strong>本日のテーマ：赤ちゃんの抱き方・あやし方</strong>
+        </div>
+        <div class="sample-body">
+          <p class="sample-heading">【基本の抱き方をマスターしよう】</p>
+          <p>赤ちゃんの首はまだ不安定です。必ず頭と首を手のひらでしっかり支えましょう。縦抱きは生後1ヶ月頃から少しずつ練習してみてください。</p>
+          <p class="sample-heading">【あやしのコツ3選】</p>
+          <p>① ゆっくり上下に揺らす（縦ゆれ）<br>② 「しーしー」と耳元でささやく<br>③ 心臓の音を聞かせるよう胸に密着して抱く</p>
+          <p>パパの大きな手は赤ちゃんに安心感を与えます。ぜひ積極的に抱っこしてあげてください！</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2025 パパケア | <a href="/unsubscribe">配信停止</a></p>
+    </footer>
+
+  </div>
+
+  <script>
+    const form = document.getElementById('subscribe-form');
+    const msgEl = document.getElementById('message');
+    const btn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+
+      btn.disabled = true;
+      btn.textContent = '登録中...';
+      msgEl.className = 'message hidden';
+
+      try {
+        const res = await fetch('/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+
+        msgEl.textContent = data.message;
+        msgEl.className = `message ${data.ok ? 'success' : 'error'}`;
+
+        if (data.ok) {
+          form.reset();
+          btn.textContent = '✓ 登録完了';
+        } else {
+          btn.disabled = false;
+          btn.textContent = '登録する';
+        }
+      } catch {
+        msgEl.textContent = '通信エラーが発生しました。しばらく後に再試行してください。';
+        msgEl.className = 'message error';
+        btn.disabled = false;
+        btn.textContent = '登録する';
+      }
+    });
+  </script>
+</body>
+</html>
