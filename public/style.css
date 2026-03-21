@@ -548,7 +548,8 @@ body {
   font-size: .875rem;
   font-weight: 500;
   transition: background .2s, transform .15s;
-  cursor: default;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .topic-chip:hover {
