@@ -73,6 +73,15 @@ body {
   transform: scale(1.04);
 }
 
+.nav-badge {
+  background: var(--green-ll);
+  color: var(--green-dark);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
 /* ── Hero ─────────────────────────────────────── */
 .hero {
   position: relative;
@@ -612,3 +621,107 @@ body {
   .hero-stats { flex-direction: column; gap: 10px; }
   .stat-divider { width: 60px; height: 1px; }
 }
+
+/* ── Article Section ──────────────────────────── */
+.article-section {
+  padding: 80px 0;
+  background: var(--white);
+}
+
+.article-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 60px 0;
+  color: var(--text-sub);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.article-card {
+  background: #fafcfb;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.article-header {
+  background: linear-gradient(135deg, var(--green), var(--green-l));
+  padding: 28px 36px;
+  color: #fff;
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.article-label {
+  background: rgba(255,255,255,.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.article-updated {
+  font-size: .75rem;
+  opacity: .8;
+}
+
+.article-topic {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.article-body {
+  padding: 32px 36px;
+  color: var(--text);
+  line-height: 1.9;
+}
+
+.article-body p {
+  margin: 6px 0;
+}
+
+.article-heading {
+  color: var(--green-dark);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 20px 0 8px;
+}
+
+.article-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 0;
+  color: var(--text-sub);
+  font-size: 1rem;
+}
+
+.article-error span { font-size: 2.5rem; }
+
+@media (max-width: 640px) {
+  .article-header { padding: 20px 24px; }
+  .article-body { padding: 24px; }
+  .article-topic { font-size: 1.15rem; }
+}
+

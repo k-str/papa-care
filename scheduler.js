@@ -1,31 +1,27 @@
 const cron = require('node-cron');
 const { generateParentingTip } = require('./claude');
-const { sendToAll } = require('./mailer');
-const db = require('./db');
+const article = require('./article');
 
-async function runDailyDelivery() {
-  console.log(`\n[${new Date().toLocaleString('ja-JP')}] 育児情報の生成・配信を開始します...`);
-
+async function runDailyUpdate() {
+  console.log(`\n[${new Date().toLocaleString('ja-JP')}] 記事の生成を開始します...`);
   try {
     const { topic, content } = await generateParentingTip();
-    console.log(`✓ Claude が生成完了 — テーマ: ${topic}`);
-
-    const subscribers = db.getAll();
-    console.log(`📧 購読者数: ${subscribers.length}`);
-
-    const { sent, failed } = await sendToAll(subscribers, topic, content);
-    console.log(`✓ 配信完了 — 成功: ${sent}, 失敗: ${failed}\n`);
+    article.save({ topic, content });
+    console.log(`✓ 記事を更新しました — テーマ: ${topic}`);
   } catch (err) {
-    console.error('配信処理でエラーが発生しました:', err.message);
+    console.error('記事生成でエラーが発生しました:', err.message);
   }
 }
 
 function startScheduler() {
-  // 毎日 12:00 に実行（日本時間に合わせるにはタイムゾーンを設定してください）
-  cron.schedule('0 12 * * *', runDailyDelivery, {
-    timezone: 'Asia/Tokyo',
-  });
-  console.log('⏰ スケジューラー起動: 毎日 12:00 (JST) に育児情報を配信します');
+  // 記事がなければ起動時に即生成
+  if (!article.get()) {
+    console.log('📄 初回記事を生成します...');
+    runDailyUpdate();
+  }
+
+  cron.schedule('0 12 * * *', runDailyUpdate, { timezone: 'Asia/Tokyo' });
+  console.log('⏰ スケジューラー起動: 毎日 12:00 (JST) に記事を更新します');
 }
 
-module.exports = { startScheduler, runDailyDelivery };
+module.exports = { startScheduler, runDailyUpdate };

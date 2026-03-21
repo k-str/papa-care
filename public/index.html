@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>パパケア 🍀 - 新米パパの育児メルマガ</title>
+  <title>パパケア 🍀 - 新米パパの育児情報</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
   <nav class="nav">
     <div class="nav-inner">
       <span class="nav-logo">🍀 パパケア</span>
-      <a href="#register" class="nav-cta">無料登録</a>
+      <span class="nav-badge">毎日12時更新</span>
     </div>
   </nav>
 
@@ -23,14 +23,14 @@
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <div class="hero-badge">✨ AI生成・毎日無料配信</div>
+      <div class="hero-badge">✨ AI生成・毎日自動更新</div>
       <h1 class="hero-title">
         パパになったあなたへ、<br>
         <span class="accent">毎日ひとつ</span>の育児ヒント
       </h1>
       <p class="hero-sub">
         Claude AIが新米パパ目線で生成した育児情報を<br>
-        毎日お昼12時にメールでお届けします
+        毎日お昼12時に更新します
       </p>
       <div class="hero-stats">
         <div class="stat">
@@ -39,16 +39,16 @@
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
-          <span class="stat-num">0円</span>
-          <span class="stat-label">完全無料</span>
+          <span class="stat-num">毎日</span>
+          <span class="stat-label">12:00 に更新</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
-          <span class="stat-num">1分</span>
-          <span class="stat-label">で登録完了</span>
+          <span class="stat-num">AI</span>
+          <span class="stat-label">が毎回生成</span>
         </div>
       </div>
-      <a href="#register" class="hero-btn">メールアドレスで無料登録 →</a>
+      <a href="#today" class="hero-btn">今日の記事を読む →</a>
     </div>
     <div class="hero-visual">
       <div class="hero-card">
@@ -56,7 +56,7 @@
           <span class="hcard-icon">🍀</span>
           <div>
             <div class="hcard-title">今日のパパケア</div>
-            <div class="hcard-date">毎日 12:00 配信</div>
+            <div class="hcard-date">毎日 12:00 更新</div>
           </div>
         </div>
         <div class="hcard-theme">テーマ：赤ちゃんの抱き方</div>
@@ -71,10 +71,41 @@
     </div>
   </section>
 
+  <!-- 今日の記事 -->
+  <section class="article-section" id="today">
+    <div class="inner">
+      <h2 class="section-title">今日の育児情報</h2>
+
+      <!-- ローディング -->
+      <div class="article-loading" id="articleLoading">
+        <div class="loading-spinner"></div>
+        <p>記事を読み込んでいます...</p>
+      </div>
+
+      <!-- 記事本文 -->
+      <div class="article-card" id="articleCard" style="display:none;">
+        <div class="article-header">
+          <div class="article-meta">
+            <span class="article-label">本日のテーマ</span>
+            <span class="article-updated" id="articleUpdated"></span>
+          </div>
+          <h3 class="article-topic" id="articleTopic"></h3>
+        </div>
+        <div class="article-body" id="articleBody"></div>
+      </div>
+
+      <!-- エラー -->
+      <div class="article-error" id="articleError" style="display:none;">
+        <span>⚠️</span>
+        <p id="articleErrorMsg">記事を準備中です。しばらくお待ちください。</p>
+      </div>
+    </div>
+  </section>
+
   <!-- 特徴 -->
   <section class="features">
     <div class="inner">
-      <h2 class="section-title">パパケアが選ばれる理由</h2>
+      <h2 class="section-title">パパケアについて</h2>
       <div class="feature-grid">
         <div class="feature-card">
           <div class="fc-icon">🤖</div>
@@ -88,79 +119,14 @@
         </div>
         <div class="feature-card">
           <div class="fc-icon">⏰</div>
-          <h3>毎日12時に届く</h3>
-          <p>昼休みにサッと読める長さで配信。忙しいパパでも無理なく育児知識が身につきます。</p>
+          <h3>毎日12時に更新</h3>
+          <p>昼休みにサッと読める長さで毎日更新。忙しいパパでも無理なく育児知識が身につきます。</p>
         </div>
         <div class="feature-card">
           <div class="fc-icon">🔓</div>
-          <h3>完全無料・即解除</h3>
-          <p>クレジットカード不要。配信停止はメール内のリンクをクリックするだけ。</p>
+          <h3>完全無料</h3>
+          <p>登録不要・クレジットカード不要。このページを開くだけで毎日読めます。</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 配信例 -->
-  <section class="sample-section">
-    <div class="inner">
-      <h2 class="section-title">こんなメールが届きます</h2>
-      <div class="sample-wrapper">
-        <div class="sample-mail">
-          <div class="sm-header">
-            <div class="sm-from">
-              <span class="sm-avatar">🍀</span>
-              <div>
-                <div class="sm-name">パパケア</div>
-                <div class="sm-addr">papa-care@example.com</div>
-              </div>
-            </div>
-            <div class="sm-time">今日 12:00</div>
-          </div>
-          <div class="sm-subject">【パパケア】本日の育児情報：赤ちゃんの抱き方・あやし方</div>
-          <div class="sm-body">
-            <p class="sm-heading">【基本の抱き方をマスターしよう】</p>
-            <p>赤ちゃんの首はまだ不安定です。必ず頭と首を手のひらでしっかり支えましょう。縦抱きは生後1ヶ月頃から少しずつ練習してみてください。</p>
-            <p class="sm-heading">【あやしのコツ3選】</p>
-            <p>① ゆっくり上下に揺らす（縦ゆれ）<br>
-               ② 「しーしー」と耳元でささやく<br>
-               ③ 心臓の音を聞かせるよう胸に密着して抱く</p>
-            <p class="sm-closing">パパの大きな手は赤ちゃんに安心感を与えます。ぜひ積極的に抱っこしてあげてください！💪</p>
-          </div>
-        </div>
-        <ul class="sample-points">
-          <li>✅ 読むのに1〜2分の手頃な長さ</li>
-          <li>✅ 見出しで内容がひと目でわかる</li>
-          <li>✅ 具体的なアクションが必ず入る</li>
-          <li>✅ 励ましのメッセージで締めくくり</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 登録フォーム -->
-  <section class="register-section" id="register">
-    <div class="inner register-inner">
-      <div class="register-text">
-        <h2>今日から始める、<br>パパの育児</h2>
-        <p>メールアドレスを登録するだけ。<br>明日のお昼12時から配信スタートします。</p>
-      </div>
-      <div class="register-form-wrap">
-        <form id="subscribe-form">
-          <label class="form-label" for="email">メールアドレス</label>
-          <div class="form-row">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="example@gmail.com"
-              required
-              autocomplete="email"
-            >
-            <button type="submit" id="submit-btn">無料で登録する</button>
-          </div>
-          <p class="form-note">🔒 スパムは送りません。いつでも配信停止できます。</p>
-          <div id="message" class="msg hidden"></div>
-        </form>
       </div>
     </div>
   </section>
@@ -190,49 +156,10 @@
     <div class="inner footer-inner">
       <span class="footer-logo">🍀 パパケア</span>
       <span class="footer-copy">© 2025 パパケア</span>
-      <a href="/unsubscribe" class="footer-link">配信停止</a>
     </div>
   </footer>
 
   <script>
-    const form = document.getElementById('subscribe-form');
-    const msgEl = document.getElementById('message');
-    const btn = document.getElementById('submit-btn');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-
-      btn.disabled = true;
-      btn.textContent = '登録中...';
-      msgEl.className = 'msg hidden';
-
-      try {
-        const res = await fetch('/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
-        const data = await res.json();
-
-        msgEl.textContent = data.message;
-        msgEl.className = `msg ${data.ok ? 'success' : 'error'}`;
-
-        if (data.ok) {
-          form.reset();
-          btn.textContent = '✓ 登録完了！';
-        } else {
-          btn.disabled = false;
-          btn.textContent = '無料で登録する';
-        }
-      } catch {
-        msgEl.textContent = '通信エラーが発生しました。しばらく後に再試行してください。';
-        msgEl.className = 'msg error';
-        btn.disabled = false;
-        btn.textContent = '無料で登録する';
-      }
-    });
-
     // スムーズスクロール
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
@@ -240,6 +167,55 @@
         document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
       });
     });
+
+    // 記事取得
+    async function loadArticle() {
+      const loading = document.getElementById('articleLoading');
+      const card    = document.getElementById('articleCard');
+      const error   = document.getElementById('articleError');
+
+      try {
+        const res  = await fetch('/article');
+        const data = await res.json();
+
+        loading.style.display = 'none';
+
+        if (!data.ok) {
+          document.getElementById('articleErrorMsg').textContent = data.message;
+          error.style.display = 'flex';
+          return;
+        }
+
+        // 更新日時
+        const dt = new Date(data.updatedAt);
+        document.getElementById('articleUpdated').textContent =
+          dt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) +
+          ' ' + dt.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) + ' 更新';
+
+        document.getElementById('articleTopic').textContent = data.topic;
+
+        // 本文をHTMLに変換（【】見出し対応）
+        const bodyHtml = data.content
+          .split('\n')
+          .map(line => {
+            if (!line.trim()) return '<br>';
+            if (line.startsWith('【') && line.includes('】')) {
+              return `<h4 class="article-heading">${line}</h4>`;
+            }
+            return `<p>${line}</p>`;
+          })
+          .join('');
+
+        document.getElementById('articleBody').innerHTML = bodyHtml;
+        card.style.display = 'block';
+
+      } catch {
+        loading.style.display = 'none';
+        error.style.display = 'flex';
+      }
+    }
+
+    loadArticle();
   </script>
 </body>
 </html>
