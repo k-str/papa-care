@@ -94,11 +94,6 @@
         <div class="article-body" id="articleBody"></div>
       </div>
 
-      <!-- エラー -->
-      <div class="article-error" id="articleError" style="display:none;">
-        <span>⚠️</span>
-        <p id="articleErrorMsg">記事を準備中です。しばらくお待ちください。</p>
-      </div>
     </div>
   </section>
 
@@ -168,50 +163,68 @@
       });
     });
 
-    // 記事取得
-    async function loadArticle() {
+    // ダミー記事（取得失敗時のフォールバック）
+    const DUMMY_ARTICLE = {
+      topic: '赤ちゃんの抱き方・あやし方',
+      updatedAt: null,
+      content: `【横抱き（水平抱き）の基本】
+首がすわっていない新生児には、頭・首・背中を一直線に支える「横抱き」が安心です。利き手と逆の腕で首を、もう一方の腕でお尻を支えましょう。
+
+【縦抱きで安心感を】
+生後1〜2ヶ月頃から、肩に頭をもたせかける縦抱きも試してみてください。パパの心臓の音が聞こえて、赤ちゃんが落ち着くことがあります。
+
+【あやし方のポイント】
+「シー」という音（ホワイトノイズ）や、ゆっくりとしたスクワット動作が効果的です。強く揺さぶるのはNG。ゆったり・リズミカルに動かしましょう。
+
+【パパだからできること】
+ママよりも大きな手・広い胸板は、赤ちゃんに安心感を与えます。最初はぎこちなくても大丈夫。毎日続けることで必ず上手になります。`
+    };
+
+    function showArticle(topic, content, updatedAt) {
       const loading = document.getElementById('articleLoading');
       const card    = document.getElementById('articleCard');
-      const error   = document.getElementById('articleError');
 
+      loading.style.display = 'none';
+
+      if (updatedAt) {
+        const dt = new Date(updatedAt);
+        document.getElementById('articleUpdated').textContent =
+          dt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) +
+          ' ' + dt.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) + ' 更新';
+      } else {
+        document.getElementById('articleUpdated').textContent = 'サンプル記事';
+      }
+
+      document.getElementById('articleTopic').textContent = topic;
+
+      const bodyHtml = content
+        .split('\n')
+        .map(line => {
+          if (!line.trim()) return '<br>';
+          if (line.startsWith('【') && line.includes('】')) {
+            return `<h4 class="article-heading">${line}</h4>`;
+          }
+          return `<p>${line}</p>`;
+        })
+        .join('');
+
+      document.getElementById('articleBody').innerHTML = bodyHtml;
+      card.style.display = 'block';
+    }
+
+    // 記事取得
+    async function loadArticle() {
       try {
         const res  = await fetch('/article');
         const data = await res.json();
 
-        loading.style.display = 'none';
-
-        if (!data.ok) {
-          document.getElementById('articleErrorMsg').textContent = data.message;
-          error.style.display = 'flex';
-          return;
+        if (data.ok) {
+          showArticle(data.topic, data.content, data.updatedAt);
+        } else {
+          showArticle(DUMMY_ARTICLE.topic, DUMMY_ARTICLE.content, null);
         }
-
-        // 更新日時
-        const dt = new Date(data.updatedAt);
-        document.getElementById('articleUpdated').textContent =
-          dt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) +
-          ' ' + dt.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) + ' 更新';
-
-        document.getElementById('articleTopic').textContent = data.topic;
-
-        // 本文をHTMLに変換（【】見出し対応）
-        const bodyHtml = data.content
-          .split('\n')
-          .map(line => {
-            if (!line.trim()) return '<br>';
-            if (line.startsWith('【') && line.includes('】')) {
-              return `<h4 class="article-heading">${line}</h4>`;
-            }
-            return `<p>${line}</p>`;
-          })
-          .join('');
-
-        document.getElementById('articleBody').innerHTML = bodyHtml;
-        card.style.display = 'block';
-
       } catch {
-        loading.style.display = 'none';
-        error.style.display = 'flex';
+        showArticle(DUMMY_ARTICLE.topic, DUMMY_ARTICLE.content, null);
       }
     }
 
