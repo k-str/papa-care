@@ -51,23 +51,83 @@
       <a href="#today" class="hero-btn">今日の記事を読む →</a>
     </div>
     <div class="hero-visual">
-      <div class="hero-card">
-        <div class="hcard-top">
-          <span class="hcard-icon">🍀</span>
-          <div>
-            <div class="hcard-title">今日のパパケア</div>
-            <div class="hcard-date">毎日 12:00 更新</div>
-          </div>
-        </div>
-        <div class="hcard-theme">テーマ：赤ちゃんの抱き方</div>
-        <div class="hcard-lines">
-          <div class="hcard-line w80"></div>
-          <div class="hcard-line w60"></div>
-          <div class="hcard-line w90"></div>
-          <div class="hcard-line w50"></div>
-        </div>
-        <div class="hcard-footer">Claude AI が生成</div>
-      </div>
+      <!-- パパと赤ちゃんのイラスト -->
+      <svg class="hero-illust" viewBox="0 0 340 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="パパが赤ちゃんを抱っこしているイラスト">
+
+        <!-- 背景の円 -->
+        <circle cx="170" cy="200" r="150" fill="#fde8f2" opacity=".5"/>
+        <circle cx="170" cy="200" r="110" fill="#fde8f2" opacity=".4"/>
+
+        <!-- ── パパ ── -->
+        <!-- 体（胴体） -->
+        <rect x="110" y="195" width="120" height="110" rx="30" fill="#7b4fa8"/>
+        <!-- 首 -->
+        <rect x="152" y="172" width="36" height="32" rx="10" fill="#f5c0a0"/>
+        <!-- 頭 -->
+        <ellipse cx="170" cy="148" rx="44" ry="42" fill="#f5c0a0"/>
+        <!-- 髪 -->
+        <ellipse cx="170" cy="118" rx="44" ry="22" fill="#3a2a1a"/>
+        <rect x="126" y="118" width="12" height="28" rx="6" fill="#3a2a1a"/>
+        <rect x="202" y="118" width="12" height="28" rx="6" fill="#3a2a1a"/>
+        <!-- 顔パーツ -->
+        <ellipse cx="155" cy="150" rx="5" ry="6" fill="#3a2a1a"/>
+        <ellipse cx="185" cy="150" rx="5" ry="6" fill="#3a2a1a"/>
+        <path d="M157 165 Q170 174 183 165" stroke="#e8607a" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <!-- ほっぺ -->
+        <ellipse cx="143" cy="158" rx="8" ry="5" fill="#f0a0b0" opacity=".6"/>
+        <ellipse cx="197" cy="158" rx="8" ry="5" fill="#f0a0b0" opacity=".6"/>
+        <!-- 眉毛 -->
+        <path d="M148 140 Q155 136 162 140" stroke="#3a2a1a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <path d="M178 140 Q185 136 192 140" stroke="#3a2a1a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+        <!-- 左腕（赤ちゃんを支える） -->
+        <rect x="72" y="200" width="44" height="24" rx="12" fill="#7b4fa8"/>
+        <rect x="72" y="218" width="24" height="60" rx="12" fill="#7b4fa8"/>
+        <!-- 左手 -->
+        <ellipse cx="84" cy="285" rx="16" ry="12" fill="#f5c0a0"/>
+
+        <!-- 右腕 -->
+        <rect x="224" y="200" width="44" height="24" rx="12" fill="#7b4fa8"/>
+        <rect x="244" y="218" width="24" height="55" rx="12" fill="#7b4fa8"/>
+        <!-- 右手 -->
+        <ellipse cx="256" cy="278" rx="16" ry="12" fill="#f5c0a0"/>
+
+        <!-- ── 赤ちゃん ── -->
+        <!-- おくるみ -->
+        <ellipse cx="170" cy="272" rx="58" ry="48" fill="#f0609a"/>
+        <ellipse cx="170" cy="272" rx="46" ry="38" fill="#fde8f2"/>
+        <!-- 首〜顔 -->
+        <ellipse cx="170" cy="232" rx="28" ry="26" fill="#f8d0b0"/>
+        <!-- 髪の毛（ちょびっと） -->
+        <path d="M148 218 Q160 208 180 212 Q190 208 192 218" fill="#c08060"/>
+        <!-- 目 -->
+        <ellipse cx="160" cy="232" rx="4" ry="4.5" fill="#3a2a1a"/>
+        <ellipse cx="180" cy="232" rx="4" ry="4.5" fill="#3a2a1a"/>
+        <!-- ハイライト -->
+        <circle cx="162" cy="230" r="1.5" fill="white"/>
+        <circle cx="182" cy="230" r="1.5" fill="white"/>
+        <!-- 口（にっこり） -->
+        <path d="M162 242 Q170 248 178 242" stroke="#e8607a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <!-- ほっぺ -->
+        <ellipse cx="150" cy="238" rx="7" ry="4.5" fill="#f0a0b0" opacity=".7"/>
+        <ellipse cx="190" cy="238" rx="7" ry="4.5" fill="#f0a0b0" opacity=".7"/>
+        <!-- 小さい手 -->
+        <ellipse cx="130" cy="262" rx="10" ry="8" fill="#f8d0b0"/>
+        <ellipse cx="210" cy="258" rx="10" ry="8" fill="#f8d0b0"/>
+
+        <!-- ハートのきらきら -->
+        <text x="48"  y="155" font-size="22" fill="#e8192c" opacity=".8">♥</text>
+        <text x="262" y="170" font-size="16" fill="#f0609a" opacity=".9">♥</text>
+        <text x="240" y="130" font-size="13" fill="#f5c400" opacity=".8">★</text>
+        <text x="68"  y="200" font-size="12" fill="#7b4fa8" opacity=".7">★</text>
+
+        <!-- 足 -->
+        <rect x="128" y="295" width="36" height="50" rx="18" fill="#7b4fa8"/>
+        <rect x="176" y="295" width="36" height="50" rx="18" fill="#7b4fa8"/>
+        <!-- 靴 -->
+        <ellipse cx="146" cy="345" rx="22" ry="12" fill="#e8192c"/>
+        <ellipse cx="194" cy="345" rx="22" ry="12" fill="#e8192c"/>
+      </svg>
     </div>
   </section>
 
