@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>記事を書く | パパケア 🍀</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { background: #fff9fb; }
+
+    .admin-header {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      padding: 32px 24px;
+      color: #fff;
+      text-align: center;
+    }
+    .admin-header h1 { font-size: 1.6rem; font-weight: 900; }
+    .admin-header p  { opacity: .85; font-size: .9rem; margin-top: 6px; }
+
+    .admin-main { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* ── ログイン画面 ── */
+    .login-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      max-width: 400px;
+      margin: 60px auto;
+    }
+    .login-card .lock { font-size: 3rem; margin-bottom: 16px; }
+    .login-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
+    .login-card input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .login-card input:focus { border-color: var(--pink); }
+    .login-card button {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--red), var(--pink));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s;
+    }
+    .login-card button:hover { transform: scale(1.02); }
+    .login-err { color: var(--red); font-size: .85rem; margin-top: 10px; display: none; }
+
+    /* ── エディタ ── */
+    .editor-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 2px solid var(--border);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .editor-toolbar h2 { font-size: 1rem; font-weight: 700; color: var(--purple); }
+
+    .toolbar-actions { display: flex; gap: 10px; }
+
+    .btn {
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: .875rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform .15s, opacity .15s;
+    }
+    .btn:hover { transform: scale(1.03); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .btn-primary { background: linear-gradient(135deg, var(--red), var(--pink)); color: #fff; }
+    .btn-danger  { background: #fde8ea; color: var(--red); }
+    .btn-secondary { background: #f0f0f8; color: var(--text-sub); }
+
+    .editor-body { padding: 28px 28px; display: flex; flex-direction: column; gap: 16px; }
+
+    .field label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .field input, .field textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: .98rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s;
+      color: var(--text);
+      background: #fff;
+    }
+    .field input:focus, .field textarea:focus { border-color: var(--pink); }
+    .field textarea {
+      min-height: 340px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+
+    .char-count { font-size: .75rem; color: var(--text-sub); text-align: right; margin-top: 4px; }
+
+    /* 投稿一覧 */
+    .posts-panel {
+      margin-top: 40px;
+    }
+    .posts-panel h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+    .post-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--pink);
+    }
+    .post-item-title { font-weight: 700; font-size: .95rem; flex: 1; }
+    .post-item-date  { font-size: .78rem; color: var(--text-sub); }
+    .post-item-actions { display: flex; gap: 8px; }
+
+    .status-bar {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: .875rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .status-bar.success { background: #e8f7ee; color: #1a8f4e; display: block; }
+    .status-bar.error   { background: #fde8ea; color: var(--red); display: block; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" style="text-decoration:none;">🍀 パパケア</a>
+      <a href="/blog" class="nav-badge" style="text-decoration:none; cursor:pointer;">ブログ一覧</a>
+    </div>
+  </nav>
+
+  <div class="admin-header">
+    <h1>✏️ ブログ管理</h1>
+    <p>記事の作成・編集・削除ができます</p>
+  </div>
+
+  <!-- ログイン -->
+  <div id="login-screen" class="admin-main" style="display:none;">
+    <div class="login-card">
+      <div class="lock">🔐</div>
+      <h2>パスワードを入力</h2>
+      <input type="password" id="pw-input" placeholder="パスワード" autofocus>
+      <button onclick="doLogin()">ログイン</button>
+      <p class="login-err" id="login-err">パスワードが違います</p>
+    </div>
+  </div>
+
+  <!-- 編集画面 -->
+  <div id="editor-screen" class="admin-main" style="display:none;">
+    <div id="status" class="status-bar"></div>
+
+    <div class="editor-card">
+      <div class="editor-toolbar">
+        <h2 id="editor-label">📝 新規作成</h2>
+        <div class="toolbar-actions">
+          <button class="btn btn-secondary" onclick="resetForm()">リセット</button>
+          <button class="btn btn-primary" id="save-btn" onclick="savePost()">公開する</button>
+        </div>
+      </div>
+      <div class="editor-body">
+        <input type="hidden" id="edit-id">
+        <div class="field">
+          <label>タイトル *</label>
+          <input type="text" id="f-title" placeholder="記事のタイトルを入力してください" maxlength="100">
+        </div>
+        <div class="field">
+          <label>著者名</label>
+          <input type="text" id="f-author" placeholder="例：パパケア管理人" maxlength="30">
+        </div>
+        <div class="field">
+          <label>本文 *</label>
+          <textarea id="f-body" placeholder="記事の本文を書いてください。&#10;&#10;空行で段落が区切られます。"></textarea>
+          <div class="char-count"><span id="char-count">0</span> 文字</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 投稿一覧 -->
+    <div class="posts-panel">
+      <h2>📋 投稿済み記事</h2>
+      <div id="post-list-admin"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="inner footer-inner">
+      <a href="/" class="footer-logo" style="text-decoration:none;">🍀 パパケア</a>
+      <span class="footer-copy">© 2025 パパケア</span>
+    </div>
+  </footer>
+
+  <script>
+    let password = '';
+    const urlParams = new URLSearchParams(location.search);
+    const editId    = urlParams.get('edit');
+
+    // ── 認証 ──
+    function doLogin() {
+      const input = document.getElementById('pw-input').value;
+      verifyPassword(input).then(ok => {
+        if (ok) {
+          password = input;
+          document.getElementById('login-screen').style.display = 'none';
+          document.getElementById('editor-screen').style.display = 'block';
+          loadPosts();
+          if (editId) loadForEdit(editId);
+        } else {
+          document.getElementById('login-err').style.display = 'block';
+        }
+      });
+    }
+
+    async function verifyPassword(pw) {
+      try {
+        const res = await fetch('/api/posts', { headers: { 'x-blog-password': pw } });
+        // 認証チェック用に投稿を試みる（空データなのでバリデーションエラーになるが401は来ない）
+        const test = await fetch('/api/posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-blog-password': pw },
+          body: JSON.stringify({ title: '', body: '' }),
+        });
+        return test.status !== 401;
+      } catch { return false; }
+    }
+
+    document.getElementById('pw-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    // ── フォーム ──
+    document.getElementById('f-body').addEventListener('input', function() {
+      document.getElementById('char-count').textContent = this.value.length;
+    });
+
+    function resetForm() {
+      document.getElementById('edit-id').value = '';
+      document.getElementById('f-title').value = '';
+      document.getElementById('f-body').value = '';
+      document.getElementById('char-count').textContent = '0';
+      document.getElementById('editor-label').textContent = '📝 新規作成';
+      document.getElementById('save-btn').textContent = '公開する';
+      hideStatus();
+    }
+
+    async function loadForEdit(id) {
+      try {
+        const res  = await fetch(`/api/posts/${id}`);
+        const data = await res.json();
+        if (!data.ok) return;
+        const p = data.post;
+        document.getElementById('edit-id').value   = p.id;
+        document.getElementById('f-title').value   = p.title;
+        document.getElementById('f-author').value  = p.author;
+        document.getElementById('f-body').value    = p.body;
+        document.getElementById('char-count').textContent = p.body.length;
+        document.getElementById('editor-label').textContent = '✏️ 記事を編集中';
+        document.getElementById('save-btn').textContent = '更新する';
+      } catch {}
+    }
+
+    async function savePost() {
+      const id     = document.getElementById('edit-id').value;
+      const title  = document.getElementById('f-title').value.trim();
+      const author = document.getElementById('f-author').value.trim() || '管理者';
+      const body   = document.getElementById('f-body').value.trim();
+
+      if (!title || !body) { showStatus('タイトルと本文は必須です', 'error'); return; }
+
+      const btn = document.getElementById('save-btn');
+      btn.disabled = true;
+      btn.textContent = '保存中...';
+
+      try {
+        const url    = id ? `/api/posts/${id}` : '/api/posts';
+        const method = id ? 'PUT' : 'POST';
+        const res    = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json', 'x-blog-password': password },
+          body: JSON.stringify({ title, author, body }),
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+          showStatus(id ? '記事を更新しました！' : '記事を公開しました！', 'success');
+          resetForm();
+          loadPosts();
+        } else {
+          showStatus(data.message, 'error');
+        }
+      } catch {
+        showStatus('保存に失敗しました', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = document.getElementById('edit-id').value ? '更新する' : '公開する';
+      }
+    }
+
+    async function deletePost(id, title) {
+      if (!confirm(`「${title}」を削除しますか？`)) return;
+      try {
+        await fetch(`/api/posts/${id}`, {
+          method: 'DELETE',
+          headers: { 'x-blog-password': password },
+        });
+        showStatus('記事を削除しました', 'success');
+        loadPosts();
+      } catch {
+        showStatus('削除に失敗しました', 'error');
+      }
+    }
+
+    async function loadPosts() {
+      try {
+        const res   = await fetch('/api/posts');
+        const { posts } = await res.json();
+        const el    = document.getElementById('post-list-admin');
+
+        if (!posts.length) {
+          el.innerHTML = '<p style="color:var(--text-sub); font-size:.9rem;">まだ記事がありません</p>';
+          return;
+        }
+
+        el.innerHTML = posts.map(p => {
+          const date = new Date(p.createdAt).toLocaleDateString('ja-JP');
+          return `
+          <div class="post-item">
+            <div>
+              <div class="post-item-title">${escHtml(p.title)}</div>
+              <div class="post-item-date">${date} ・ ${escHtml(p.author)}</div>
+            </div>
+            <div class="post-item-actions">
+              <button class="btn btn-secondary" onclick="loadForEdit('${p.id}')">編集</button>
+              <a class="btn btn-secondary" href="/blog/${p.id}" target="_blank">表示</a>
+              <button class="btn btn-danger" onclick="deletePost('${p.id}', '${escHtml(p.title)}')">削除</button>
+            </div>
+          </div>`;
+        }).join('');
+      } catch {}
+    }
+
+    function showStatus(msg, type) {
+      const el = document.getElementById('status');
+      el.textContent = msg;
+      el.className = `status-bar ${type}`;
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(hideStatus, 4000);
+    }
+
+    function hideStatus() {
+      document.getElementById('status').className = 'status-bar';
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // 初期表示
+    document.getElementById('login-screen').style.display = 'block';
+  </script>
+</body>
+</html>

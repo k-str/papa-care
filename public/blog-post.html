@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>記事 | パパケア 🍀</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .post-main { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    .post-header {
+      background: linear-gradient(135deg, var(--red), var(--pink) 50%, var(--purple));
+      padding: 48px 24px 40px;
+      color: #fff;
+      text-align: center;
+    }
+    .post-header-meta { font-size: .82rem; opacity: .85; margin-bottom: 12px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .post-header h1 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 900; line-height: 1.4; }
+
+    .post-body {
+      font-size: 1.02rem;
+      line-height: 2;
+      color: #2a2a3a;
+      margin-top: 40px;
+    }
+    .post-body p { margin-bottom: 1.4em; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--pink);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: .9rem;
+      margin-bottom: 32px;
+    }
+    .back-btn:hover { text-decoration: underline; }
+
+    .post-footer-nav {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 2px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .edit-btn {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: .85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s;
+    }
+    .edit-btn:hover { transform: scale(1.04); }
+
+    .error-state { text-align: center; padding: 80px 24px; color: var(--text-sub); }
+    .error-state span { font-size: 3rem; display: block; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" style="text-decoration:none;">🍀 パパケア</a>
+      <a href="/blog" class="nav-badge" style="text-decoration:none; cursor:pointer;">← ブログ一覧</a>
+    </div>
+  </nav>
+
+  <div id="post-header" class="post-header" style="display:none;">
+    <div class="post-header-meta">
+      <span id="post-date"></span>
+      <span id="post-author"></span>
+    </div>
+    <h1 id="post-title"></h1>
+  </div>
+
+  <main class="post-main">
+    <div id="loading" style="text-align:center; padding:60px; color:var(--text-sub);">読み込み中...</div>
+    <div id="content" style="display:none;">
+      <div id="post-body" class="post-body"></div>
+      <div class="post-footer-nav">
+        <a href="/blog" class="back-btn">← 一覧に戻る</a>
+        <a id="edit-link" href="#" class="edit-btn">✏️ 編集する</a>
+      </div>
+    </div>
+    <div id="error" class="error-state" style="display:none;">
+      <span>😢</span>
+      <p>記事が見つかりませんでした。</p>
+      <br>
+      <a href="/blog" class="back-btn">← ブログ一覧へ</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="inner footer-inner">
+      <a href="/" class="footer-logo" style="text-decoration:none;">🍀 パパケア</a>
+      <span class="footer-copy">© 2025 パパケア</span>
+    </div>
+  </footer>
+
+  <script>
+    const id = location.pathname.split('/').pop();
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    async function loadPost() {
+      try {
+        const res  = await fetch(`/api/posts/${id}`);
+        const data = await res.json();
+
+        document.getElementById('loading').style.display = 'none';
+
+        if (!data.ok) { document.getElementById('error').style.display = 'block'; return; }
+
+        const p = data.post;
+        document.title = `${p.title} | パパケア`;
+
+        const date = new Date(p.createdAt).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('post-date').textContent = '📅 ' + date;
+        document.getElementById('post-author').textContent = '✍️ ' + p.author;
+        document.getElementById('post-title').textContent = p.title;
+        document.getElementById('post-header').style.display = 'block';
+
+        // 本文：空行を段落区切りに
+        document.getElementById('post-body').innerHTML =
+          p.body.split(/\n\n+/).map(para =>
+            `<p>${escHtml(para.trim()).replace(/\n/g, '<br>')}</p>`
+          ).join('');
+
+        document.getElementById('edit-link').href = `/admin/blog?edit=${p.id}`;
+        document.getElementById('content').style.display = 'block';
+      } catch {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+      }
+    }
+
+    loadPost();
+  </script>
+</body>
+</html>

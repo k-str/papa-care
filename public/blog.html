@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブログ | パパケア 🍀</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .blog-hero {
+      background: linear-gradient(135deg, var(--red), var(--pink) 50%, var(--purple));
+      padding: 60px 24px 48px;
+      text-align: center;
+      color: #fff;
+    }
+    .blog-hero h1 { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+    .blog-hero p  { opacity: .88; font-size: 1rem; }
+
+    .blog-main { max-width: 800px; margin: 0 auto; padding: 48px 24px; }
+
+    .post-list { display: flex; flex-direction: column; gap: 20px; }
+
+    .post-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform .2s, box-shadow .2s;
+      border-left: 5px solid;
+    }
+    .post-card:nth-child(4n+1) { border-left-color: var(--red); }
+    .post-card:nth-child(4n+2) { border-left-color: var(--yellow); }
+    .post-card:nth-child(4n+3) { border-left-color: var(--pink); }
+    .post-card:nth-child(4n+0) { border-left-color: var(--purple); }
+    .post-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+    .post-meta { font-size: .78rem; color: var(--text-sub); margin-bottom: 8px; display: flex; gap: 12px; }
+    .post-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; }
+    .post-excerpt { font-size: .9rem; color: var(--text-sub); line-height: 1.7; }
+    .post-read-more { margin-top: 12px; font-size: .85rem; font-weight: 700; color: var(--pink); }
+
+    .empty-state {
+      text-align: center; padding: 80px 0; color: var(--text-sub);
+    }
+    .empty-state .empty-icon { font-size: 3.5rem; display: block; margin-bottom: 16px; }
+
+    .write-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--red), var(--pink));
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: .9rem;
+      box-shadow: 0 4px 14px rgba(240,96,154,.35);
+      transition: transform .2s;
+      margin-bottom: 32px;
+    }
+    .write-btn:hover { transform: scale(1.04); }
+
+    .loading { text-align: center; padding: 60px; color: var(--text-sub); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" style="text-decoration:none;">🍀 パパケア</a>
+      <span class="nav-badge">ブログ</span>
+    </div>
+  </nav>
+
+  <div class="blog-hero">
+    <h1>📝 パパのブログ</h1>
+    <p>育児の記録や気づきを自由に発信</p>
+  </div>
+
+  <main class="blog-main">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px;">
+      <h2 style="font-size:1.1rem; color:var(--text-sub);">記事一覧</h2>
+      <a href="/admin/blog" class="write-btn">✏️ 記事を書く</a>
+    </div>
+
+    <div id="loading" class="loading">読み込み中...</div>
+    <div id="post-list" class="post-list" style="display:none;"></div>
+    <div id="empty" class="empty-state" style="display:none;">
+      <span class="empty-icon">📭</span>
+      <p>まだ記事がありません。<br>最初の記事を書いてみましょう！</p>
+      <br>
+      <a href="/admin/blog" class="write-btn">✏️ 記事を書く</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="inner footer-inner">
+      <a href="/" class="footer-logo" style="text-decoration:none;">🍀 パパケア</a>
+      <span class="footer-copy">© 2025 パパケア</span>
+    </div>
+  </footer>
+
+  <script>
+    const colors = ['var(--red)', '#b08a00', 'var(--pink)', 'var(--purple)'];
+
+    async function loadPosts() {
+      try {
+        const res = await fetch('/api/posts');
+        const { posts } = await res.json();
+
+        document.getElementById('loading').style.display = 'none';
+
+        if (!posts.length) {
+          document.getElementById('empty').style.display = 'block';
+          return;
+        }
+
+        const list = document.getElementById('post-list');
+        list.style.display = 'flex';
+
+        list.innerHTML = posts.map((p, i) => {
+          const date = new Date(p.createdAt).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+          const excerpt = p.body.replace(/\n/g, ' ').slice(0, 80) + (p.body.length > 80 ? '…' : '');
+          return `
+            <a href="/blog/${p.id}" class="post-card">
+              <div class="post-meta">
+                <span>📅 ${date}</span>
+                <span>✍️ ${p.author}</span>
+              </div>
+              <div class="post-title">${escHtml(p.title)}</div>
+              <div class="post-excerpt">${escHtml(excerpt)}</div>
+              <div class="post-read-more">続きを読む →</div>
+            </a>`;
+        }).join('');
+      } catch {
+        document.getElementById('loading').textContent = '読み込みに失敗しました。';
+      }
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    loadPosts();
+  </script>
+</body>
+</html>
